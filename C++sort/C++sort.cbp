@@ -34,7 +34,7 @@
 		</Compiler>
 		<Unit filename="main.cpp" />
 		<Unit filename="my-int-vector.h" />
-		<Unit filename="my-vector-template.h" />
+		<Unit filename="my-vector.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

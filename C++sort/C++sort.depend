@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1616466996 source:c:\users\paowe\onedrive\文件\109-2\program_design_2\c++sort\main.cpp
+	<bits/stdc++.h>
+	"my-int-vector.h"
+	"my-vector.h"
+
+1616466826 c:\users\paowe\onedrive\文件\109-2\program_design_2\c++sort\my-int-vector.h
+	<stdlib.h>
+
+1616466812 c:\users\paowe\onedrive\文件\109-2\program_design_2\c++sort\my-vector.h
+	<stdlib.h>
+
