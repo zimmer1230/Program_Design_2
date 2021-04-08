@@ -3,6 +3,9 @@
 
 int main(){
 
+    int circle;
+    scanf("%d",)
+
 
 
 
