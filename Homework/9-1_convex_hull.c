@@ -1,5 +1,5 @@
 #include<stdio.h>
-
+#include<math.h>
 int points[10005][2];  //points[][0] is x-axis, [][1] is y-axis;
 int *wrap_order[10005];
 int n;
@@ -71,6 +71,13 @@ void update_vect(int cmp_vect[],int vect[]){
         vect[0]=cmp_vect[0];
         vect[1]=cmp_vect[1];
         vect[2]=cmp_vect[2];
+    }
+    else if( cross_product(cmp_vect,vect)==0){
+        if(abs(cmp_vect[0])>abs(vect[0]) || abs(cmp_vect[1])>abs(vect[1]) ){
+            vect[0]=cmp_vect[0];
+            vect[1]=cmp_vect[1];
+            vect[2]=cmp_vect[2];
+        }
     }
 
 }
