@@ -13,20 +13,11 @@ int table[20005];
 int main(){
     scanf("%d",&n);
     for(int i=0;i<n;i++)
-            scanf("%d",&coin[i]);
+        scanf("%d",&coin[i]);
 
     scanf("%d",&m);
     B(0);
     printf("%d",table[m]);
-
-
-
-
-
-
-
-
-
 return 0;
 }
 
@@ -36,10 +27,8 @@ void B(int level){
         B(level+1);
         return;
     }
-
     if( level > m)
         return;
-
     int sol_exist=0;
     int min=-1;//unassigned
     for(int i=0;i<n;i++){

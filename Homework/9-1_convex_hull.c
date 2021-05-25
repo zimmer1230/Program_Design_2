@@ -8,24 +8,21 @@ void update_vect(int[],int[]);
 long long cross_product(int[],int[]);
 int main(){
     scanf("%d",&n);
+    int *start_point;
     for(int i=0;i<n;i++){
         for(int j=0;j<2;j++){
             scanf("%d",&points[i][j]);  //i-th point
-        }
-    }
-
-    wrap_order[0] = points[0];
-    for(int i=1;i<n;i++){
-        if(*wrap_order[0]<points[i][0]){
-            wrap_order[0]=points[i];
-        }
-        else if(*wrap_order[0]==points[i][0]){
-            if( *(wrap_order[0]+1)<points[i][1] ){
-                wrap_order[0]=points[i];
+            if(i==0) start_point=points[i];
+            else if( *(start_point)<=points[i][0] ){
+                if( *(start_point)<points[i][0] )
+                    start_point=points[i];
+                else if(*(start_point+1)<points[i][1])
+                    start_point=points[i];
             }
         }
     }
-//    printf("%d",*wrap_order[0]);
+    wrap_order[0]=start_point;
+
     int node=1;
     for(int i=0;i<n;i++){
         if( i!=0 && wrap_order[i]==wrap_order[0] ) break;
