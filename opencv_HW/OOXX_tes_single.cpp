@@ -195,11 +195,11 @@ int judge(int table[3][3]){  // return 1 : O win ; 0 : Tie ; -1 : X win
 
 #define min 1
 #define max 8
-int min_max_search(int node_type, int table[3][3]){ // return the score of table[][]
+int min_max_search(int node_type, int table[3][3]){   // return the score of table[][]
           if( judge(table) == 1 || judge(table) == -1 ) return judge(table);
           int gaming = 0;
-          for( int i = 0; i<2; i++ ){
-                    for( int j=0; j<2; j++ ){
+          for( int i = 0; i<3; i++ ){
+                    for( int j=0; j<3; j++ ){
                               if( table[i][j]==0 ){
                                         gaming = 1;
                               }
