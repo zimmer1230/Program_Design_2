@@ -287,7 +287,15 @@ int which_frame(int i, int j){
           }
           return 87;
 }
-
+int is_full(int table[3][3]){
+          int full = 1;
+          for( int i = 0; i<3; i++){
+                    for(int j = 0 ; j < 3; j++){
+                              if( table[i][j] == 0 ) full = 0;
+                    }
+          }
+          return full;
+}
 void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 {
      Point pt1;
@@ -351,6 +359,7 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
           int k = 2;
           int result;
           int tmp_table[3][3]={};
+          copy_table(table,tmp_table);
           for(int i=0 ; i< 3; i++){
                     for(int j = 0; j<3; j++){
                               if( table[i][j]==0 ){
@@ -371,9 +380,21 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
           show_table(table);
           if( judge(table) ==   1  ){
                     printf("O wins\n");
-
+                    putText(fin,"O wins , you good good.", Point( 0,150 ), 1, 5, Scalar(0,0,0),3);
+                    imshow("Congratuation!",fin);
           }
-          if( judge(table) == -1 ) printf("X wins\n");
+          if( judge(table) == -1 ){
+                    printf("X wins\n");
+                    putText(fin,"X wins , you bad bad.", Point( 0,150 ), 1, 5, Scalar(0,0,0),3);
+                    imshow("Sorry",fin);
+          }
+
+
+          if( is_full(table) && judge(table) == 0){
+                    printf("No one wins\n");
+                    putText(fin,"Tie", Point( 0,150 ), 1, 5, Scalar(0,0,0),3);
+                    imshow("Draw",fin);
+          }
 
 
 
