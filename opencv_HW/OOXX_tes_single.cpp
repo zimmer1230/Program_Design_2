@@ -182,8 +182,6 @@ int judge(int table[3][3]){  // return 1 : O win ; 0 : Tie ; -1 : X win
                     }
           }
 
-
-
           if( O_win ){
                     return 1;
           }
@@ -206,7 +204,7 @@ int min_max_search(int node_type, int table[3][3]){   // return the score of tab
                     }
           }
           if ( gaming == 0 ) return 0;
-//---------------------------------
+//-----------------------------------
           int tmp_table[3][3];
           int k;
           if( node_type == min ){
@@ -227,6 +225,7 @@ int min_max_search(int node_type, int table[3][3]){   // return the score of tab
                               }
                     }
           }
+
           else if( node_type == max ){
                     k = -2;
                     int result;
@@ -234,7 +233,7 @@ int min_max_search(int node_type, int table[3][3]){   // return the score of tab
                               for(int j = 0; j<3; j++){
                                         if ( table[i][j] == 0 ){
                                                   table[i][j] = node_type; // 8
-                                                  if( k < ( result = min_max_search(max,table) ) ){
+                                                  if( k < ( result = min_max_search(min,table) ) ){
                                                             k = result;
                                                             table[i][j] = 0;
                                                             copy_table(table,tmp_table);
@@ -348,37 +347,34 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
           }
           show_table(table);
           waitKey(1000);
-
-          if( judge(table) == 1 ) printf("O wins\n");
-          if( judge(table) == -1 ) printf("X wins\n");
-
-          int tmp_table[3][3]={};
-          copy_table(table,tmp_table);
-
-          int k = 2; // unsigned
+// computer turn
+          int k = 2;
           int result;
-          for( int i=0; i<3; i++ ){
-                    for( int j = 0; j<3; j++ ){
-                              if( table[i][j] == 0 ){
-                                        table[i][j]=1;
-                                        if( k > ( result = min_max_search(min,table) ) ){
+          int tmp_table[3][3]={};
+          for(int i=0 ; i< 3; i++){
+                    for(int j = 0; j<3; j++){
+                              if( table[i][j]==0 ){
+                                        table[i][j] = 1; // put X
+                                        result = min_max_search( max, table );
+                                        if( k > result ){
                                                   k = result;
                                                   table[i][j] = 0;
                                                   copy_table(table,tmp_table);
                                                   tmp_table[i][j] = 1;
                                         }
-                                        table[i][j] = 0;
+                                        table[i][j]=0;
                               }
                     }
           }
           copy_table(tmp_table,table);
-          for(int i = 0; i<3; i++){
-                    for(int j=0; j<3; j++){
-                              printf("%d ",table[i][j]);
-                    }
-                    printf("\n");
-          }
+//computer turn
           show_table(table);
+          if( judge(table) ==   1  ){
+                    printf("O wins\n");
+
+          }
+          if( judge(table) == -1 ) printf("X wins\n");
+
 
 
      }

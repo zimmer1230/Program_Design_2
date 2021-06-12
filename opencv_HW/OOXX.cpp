@@ -213,6 +213,7 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
                     default:
                               break;
                     }
+
                     imshow("death is like windows", img);
                     judge();
           }
