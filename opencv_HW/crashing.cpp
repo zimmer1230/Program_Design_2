@@ -25,7 +25,7 @@ struct sphere{
 sphere ball[10];
 
 
-int delta_t = 100;
+int delta_t = 10;
 
 double dist_calc( double x1, double x2, double y1, double y2 ){
           return  (x1-x2)*(x1-x2)+(y1-y2)*(y1-y2) ;
@@ -35,6 +35,18 @@ int is_touched_balls(sphere b1, sphere b2){
           if( dist_calc( b1.Px, b2.Px, b1.Py, b2.Py ) - (b1.r + b2.r)*(b1.r + b2.r) < 1 )
                     return 1;
           else return 0;
+}
+
+int is_touched_walls( sphere b ){  //right : 1 left : 2 up : 3 down : 4
+          if( b.Px + b.r > 400+box.x && b.r < box.x )
+                    return 1;
+          if( b.Px - b.r < 400-box.x && b.r < box.x  )
+                    return 2;
+          if( b.Py - b.r < 400-box.y && b.r < box.y )
+                    return 3;
+          if( b.Py + b.r > 400+box.y && b.r < box.y)
+                    return 4;
+          return 0;
 }
 
 int main(){
@@ -65,7 +77,6 @@ int main(){
           //draw box
 
 
-          int time = 0;
           //draw initial ball
           img_box_only.copyTo(img_1);
           for(int i=0;i<K;i++){
@@ -75,25 +86,31 @@ int main(){
           waitKey(delta_t);
           //draw initial ball
 
+
           //draw moving
           auto drawing_img=&img_1;
           while(1){
-
-                    if( drawing_img == &img_1 ) drawing_img=&img_2;
-                    else drawing_img=&img_1;
+//                    if( drawing_img == &img_1 ) drawing_img=&img_2;
+//                    else drawing_img=&img_1;
 
                     img_box_only.copyTo(*drawing_img);
 
                     for(int i=0;i<K-1;i++){
                               for(int j=i+1;j<K;j++){
                                         if( is_touched_balls( ball[i],ball[j] ) ){
-                                                  ball[i].Vx = ball[i].Vx * ( (ball[i].m - ball[j].m)/(ball[i].m +ball[j].m) )+ 2*ball[j].m/(ball[i].m + ball[j].m);
-                                                  printf("ball %d : %lf\n",i,ball[i].Vx);
-                                                  printf("ball %d : %lf\n",i,ball[j].Vx);
-                                                  ball[j].Vx = ball[j].Vx * ( (ball[j].m - ball[i].m)/(ball[j].m +ball[i].m) )+ 2*ball[i].m/(ball[j].m + ball[i].m);
+                                                  sphere tmp_ball_i = ball[i];
+                                                  ball[i].Vx = ( ( ( ball[i].m - ball[j].m ) * ball[i].Vx + 2 * ball[j].m *ball[j].Vx ) / ( ball[i].m  + ball[j].m ) );
+                                                  ball[j].Vx = ( ( ( ball[j].m - ball[i].m ) * ball[j].Vx + 2 * ball[i].m *tmp_ball_i.Vx ) / ( ball[i].m  + ball[j].m ) );
+
+                                                  printf(" new speed of ball %d : %lf\n",i,ball[i].Vx);
+                                                  printf(" new speed of ball %d : %lf\n",j,ball[j].Vx);
                                                   while( is_touched_balls( ball[i],ball[j] )==1) {
                                                             circle( *drawing_img, Point(  ball[i].Px += ball[i].Vx, ball[i].Py += ball[i].Vy), ball[i].r, Scalar(0,0,0), 2 );
                                                             circle( *drawing_img, Point(  ball[j].Px += ball[j].Vx, ball[j].Py += ball[j].Vy), ball[j].r, Scalar(0,0,0), 2 );
+                                                            for(int p = 0; p<K;p++){
+                                                                      if( p == i || p == j ) continue;
+                                                                      circle( *drawing_img, Point(  ball[p].Px += ball[p].Vx, ball[p].Py += ball[p].Vy), ball[p].r, Scalar(0,0,0), 2 );
+                                                            }
                                                             imshow("409410058",*drawing_img);
                                                             waitKey(delta_t);
                                                             img_box_only.copyTo(*drawing_img);
@@ -101,6 +118,39 @@ int main(){
                                         }
                               }
                     }
+
+                    for(int i=0; i<K; i++){
+                              if( is_touched_walls( ball[i] )!=0 ){
+                                        switch( is_touched_walls( ball[i] ) ){
+                                                  case 1:
+                                                            ball[i].Vx *= -1;
+                                                            break;
+                                                  case 2:
+                                                            ball[i].Vx *= -1;
+                                                            break;
+                                                  case 3:
+                                                            ball[i].Vy *= -1;
+                                                            break;
+                                                  case 4:
+                                                            ball[i].Vy *= -1;
+                                                            break;
+                                                  default:
+                                                            break;
+
+                                        }
+                                        while( is_touched_walls( ball[i] )!=0 ){
+                                                  circle( *drawing_img, Point(  ball[i].Px += ball[i].Vx, ball[i].Py += ball[i].Vy), ball[i].r, Scalar(0,0,0), 2 );
+                                                  for(int j=0;j<K;j++){
+                                                            if( j == i ) continue;
+                                                            circle( *drawing_img, Point(  ball[j].Px += ball[j].Vx, ball[j].Py += ball[j].Vy), ball[j].r, Scalar(0,0,0), 2 );
+                                                  }
+                                                  imshow( "409410058",*drawing_img );
+                                                  waitKey(delta_t);
+                                                  img_box_only.copyTo(*drawing_img);
+                                        }
+                              }
+                    }
+
                     for(int i=0;i<K;i++){
                               circle( *drawing_img, Point(  ball[i].Px += ball[i].Vx, ball[i].Py += ball[i].Vy), ball[i].r, Scalar(0,0,0), 2 );
                     }

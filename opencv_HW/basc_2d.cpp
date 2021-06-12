@@ -34,6 +34,7 @@ int main(){
 
 
     putText(img, std::string("OpenCV"), Point(280,280), 0, 1, Scalar(0,0,0),3);
+    putText(s,s,s,s,)
 
     imshow("window", img);
     waitKey(0);
