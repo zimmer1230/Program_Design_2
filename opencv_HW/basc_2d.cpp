@@ -33,8 +33,7 @@ int main(){
     polylines(img, ppt, npt, 1, 1, Scalar(0,255,255),5);
 
 
-    putText(img, std::string("OpenCV"), Point(280,280), 0, 1, Scalar(0,0,0),3);
-    putText(s,s,s,s,)
+    putText(img, std::string("OpenCV"), Point(280,280), 0, 20, Scalar(0,0,0),3);
 
     imshow("window", img);
     waitKey(0);

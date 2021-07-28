@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1624122624 source:c:\users\pao.wen\documents\109-2_wfh\program_design_2\final_opencv_game\main.cpp
+	<iostream>
+	<time.h>
+	<opencv2/opencv.hpp>
+
+1624120921 source:c:\users\pao.wen\documents\109-2_wfh\program_design_2\final_opencv_game\func.cpp
+	<iostream>
+	<stdlib.h>
+	<stdio.h>
+	<time.h>
+	<opencv2/opencv.hpp>
+

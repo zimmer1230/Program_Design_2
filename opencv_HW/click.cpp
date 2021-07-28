@@ -55,12 +55,7 @@ int main(int argc, char** argv)
      setMouseCallback("Panel Window", CallBackFunc, NULL);
 
 
-     //show the image
-     imshow("My Window", img);
-
-     // Wait until user press some key
-     printf("wait\n");
-     waitKey(0);
+          waitKey(0);
 
 
 
